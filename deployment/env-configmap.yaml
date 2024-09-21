@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  POSTGRES_HOST: udagram.csvv5cfowqmr.us-east-2.rds.amazonaws.com
+  POSTGRES_DB: postgres
+  AWS_BUCKET: huannn4-udemy
+  AWS_REGION: us-east-2
+  AWS_PROFILE: default
+  URL: http://localhost:8100
+  JWT_SECRET: huan-jwt
