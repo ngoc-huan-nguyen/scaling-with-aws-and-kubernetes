@@ -9,20 +9,29 @@ spec:
   template:
     metadata:
       labels:
-      app: postgresql
+        app: postgresql
     spec:
       containers:
       - name: postgresql
-        image: postgres:latest
-        env:
-        - name: POSTGRES_DB
-          value: my-database
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
+        image: postgres
         ports:
           - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmap
+              key: POSTGRES_DB
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_USERNAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_PASSWORD
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgresql-storage
