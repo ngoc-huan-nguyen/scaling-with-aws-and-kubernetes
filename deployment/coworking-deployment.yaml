@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: coworking
-        image: 414687549187.dkr.ecr.us-east-1.amazonaws.com/analytics:latest
+        image: 859033265802.dkr.ecr.us-east-1.amazonaws.com/coworking-analytics:latest
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -31,9 +31,29 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 5
         env:
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_USER
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: my-secret
-              key: DB_PASSWORD
+              key: POSTGRES_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmap
+              key: POSTGRES_DB
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmap
+              key: POSTGRES_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmap
+              key: POSTGRES_PORT
       restartPolicy: Always
